@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Temperature converter</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background-color: lightgray;
+        background-image: url("temp.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+
+      .container {
+        width: 400px;
+        background-color: rgb(244, 243, 243);
+        border-radius: 10px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: -300px;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        margin-left: -300px;
+      }
+
+      form {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      input[type="text"],
+      select {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      .button-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-top: 15px;
+      }
+
+      button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      #result {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-weight: bold;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Temperature Converter</h1>
+    <div class="container">
+      <form onsubmit="temperatureConverter(); return false;">
+        <label for="givtemp">Enter temperature:</label>
+        <input type="text" name="givtemp" id="givtemp" />
+        <label for="ftemp">From:</label>
+        <select name="ftemp" id="ftemp">
+          <option value="kelvin">Kelvin (K)</option>
+          <option value="celsius">Celsius (°C)</option>
+          <option value="fahrenheit">Fahrenheit (°F)</option>
+        </select>
+        <label for="ttemp">To:</label>
+        <select name="ttemp" id="ttemp">
+          <option value="celsius">Celsius (°C)</option>
+          <option value="kelvin">Kelvin (K)</option>
+          <option value="fahrenheit">Fahrenheit (°F)</option>
+        </select>
+        <div class="button-container">
+          <button type="submit">Convert</button>
+        </div>
+        <p>The Converted temperature is:</p>
+        <input type="text" id="result" readonly />
+      </form>
+    </div>
+    <script>
+      function temperatureConverter() {
+        var tempInput = document.getElementById("givtemp");
+        var fromInput = document.getElementById("ftemp");
+        var toInput = document.getElementById("ttemp");
+        var resultInput = document.getElementById("result");
+
+        var temperatureVal = parseFloat(tempInput.value);
+        var fromScale = fromInput.value;
+        var toScale = toInput.value;
+        var result;
+
+        if (fromScale == "celsius") {
+          if (toScale == "fahrenheit") {
+            result = (temperatureVal * 9) / 5 + 32;
+          } else if (toScale == "kelvin") {
+            result = temperatureVal + 273.15;
+          } else {
+            result = temperatureVal;
+          }
+        } else if (fromScale == "fahrenheit") {
+          if (toScale == "celsius") {
+            result = ((temperatureVal - 32) * 5) / 9;
+          } else if (toScale == "kelvin") {
+            result = ((temperatureVal + 459.67) * 5) / 9;
+          } else {
+            result = temperatureVal;
+          }
+        } else if (fromScale == "kelvin") {
+          if (toScale == "celsius") {
+            result = temperatureVal - 273.15;
+          } else if (toScale == "fahrenheit") {
+            result = (temperatureVal * 9) / 5 - 459.67;
+          } else {
+            result = temperatureVal;
+          }
+        }
+        resultInput.value = result.toFixed(3);
+      }
+    </script>
+  </body>
+</html>
